@@ -4,7 +4,7 @@
     url: "{{ proxmox_pve_repository_key }}"
     state: present
 
-All names should start with an uppercase letter.- name: Update sources.list
+- name: Update sources.list
   ansible.builtin.template:
     src: "etc/apt/sources.list.j2"
     dest: "/etc/apt/sources.list"
