@@ -4,7 +4,7 @@
     url: "{{ proxmox_pve_repository_key }}"
     state: present
 
-- name: update sources.list
+All names should start with an uppercase letter.- name: Update sources.list
   ansible.builtin.template:
     src: "etc/apt/sources.list.j2"
     dest: "/etc/apt/sources.list"
@@ -14,7 +14,7 @@
   when: proxmox_pbs_enable_default_repository
   register: proxmox_pbs_repository_sources_list
 
-- name: update pbs-enterprise.list
+- name: Update pbs-enterprise.list
   ansible.builtin.template:
     src: "etc/apt/sources.list.d/pbs-enterprise.list.j2"
     dest: "/etc/apt/sources.list.d/pbs-enterprise.list"
@@ -23,7 +23,7 @@
     mode: '0644'
   register: proxmox_pbs_repository_enterprise_list
 
-- name: update pbs-no-subscription.list
+- name: Update pbs-no-subscription.list
   ansible.builtin.template:
     src: "etc/apt/sources.list.d/pbs-no-subscription.list.j2"
     dest: "/etc/apt/sources.list.d/pbs-no-subscription.list"
