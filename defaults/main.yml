@@ -1,0 +1,18 @@
+---
+# Mostly tested and planned for Proxmox Backuper Server 2+/Debian 11 Bullseye
+# Older versions may work
+
+# https://pbs.proxmox.com/docs/installation.html#secureapt
+proxmox_pve_repository_key: "https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg"
+
+# manages the Proxmox /etc/apt/sources.list
+proxmox_pbs_enable_default_repository: true
+
+# Disable Enterprise Repository
+# https://pve.proxmox.com/wiki/Package_Repositories#sysadmin_enterprise_repo
+proxmox_pbs_enable_enterprise_repository: false
+
+# Enable the no subscription repository
+# https://pve.proxmox.com/wiki/Package_Repositories#sysadmin_no_subscription_repo
+# NOT recommended for production use
+proxmox_pbs_enable_no_subscription_repository: true

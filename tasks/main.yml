@@ -1,0 +1,45 @@
+---
+- name: Add PVE Apt signing key
+  ansible.builtin.apt_key:
+    url: "{{ proxmox_pve_repository_key }}"
+    state: present
+
+- name: update sources.list
+  ansible.builtin.template:
+    src: "etc/apt/sources.list.j2"
+    dest: "/etc/apt/sources.list"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+  when: proxmox_pbs_enable_default_repository
+  register: proxmox_pbs_repository_sources_list
+
+- name: update pbs-enterprise.list
+  ansible.builtin.template:
+    src: "etc/apt/sources.list.d/pbs-enterprise.list.j2"
+    dest: "/etc/apt/sources.list.d/pbs-enterprise.list"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+  register: proxmox_pbs_repository_enterprise_list
+
+- name: update pbs-no-subscription.list
+  ansible.builtin.template:
+    src: "etc/apt/sources.list.d/pbs-no-subscription.list.j2"
+    dest: "/etc/apt/sources.list.d/pbs-no-subscription.list"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+  register: proxmox_pbs_repository_no_subscription_list
+
+- name: Update repository cache
+  ansible.builtin.apt:
+    update_cache: true
+  when: proxmox_pbs_repository_sources_list.changed or
+    proxmox_pbs_repository_enterprise_list.changed or
+    proxmox_pbs_repository_no_subscription_list.changed
+  # Data should be refreshed immediatly for other roles which depend on them
+  # Flush handlers is not used because it would potentially flush handlers,
+  # which are not meant to be flushed at this point in the playbook
+  tags:
+    - skip_ansible_lint

@@ -1,0 +1,50 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: SmokeTests
+      ansible.builtin.debug:
+        msg:
+          - "ansible_version => {{ansible_version}}"
+          - "ansible_distribution => {{ ansible_distribution }}"
+          - "ansible_distribution_major_version => {{ ansible_distribution_major_version }}"
+          - "ansible_os_family  => {{ ansible_os_family}}"
+          - "ansible_system  => {{ ansible_system }}"
+
+    - name: verify PVE Apt signing key
+      ansible.builtin.apt_key:
+        url: "https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg"
+        state: present
+      check_mode: true
+      register: verify_apt_signing_key_status
+      failed_when: (verify_apt_signing_key_status is changed) or (verify_apt_signing_key_status is failed)
+
+    - name: verify if sources.list
+      ansible.builtin.lineinfile:
+        name: '/etc/apt/sources.list'
+        line: 'deb http://ftp.debian.org/debian {{ ansible_distribution_release }} main contrib'
+        state: present
+      check_mode: true
+      register: verify_repository_status
+      failed_when: (verify_repository_status is changed) or (verify_repository_status is failed)
+
+    - name: verify if pbs-enterprise.list exists
+      ansible.builtin.lineinfile:
+        name: '/etc/apt/sources.list.d/pbs-enterprise.list'
+        line: '#deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise'
+        state: present
+      check_mode: true
+      register: verify_enterprise_repository_status
+      failed_when: (verify_enterprise_repository_status is changed) or (verify_enterprise_repository_status is failed)
+
+    - name: verify if pbs-no-subscription.list exists
+      ansible.builtin.lineinfile:
+        name: '/etc/apt/sources.list.d/pbs-no-subscription.list'
+        line: 'deb http://download.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-no-subscription'
+        state: present
+      check_mode: true
+      register: verify_no_subscription_repository_status
+      failed_when: (verify_no_subscription_repository_status is changed) or (verify_no_subscription_repository_status is failed)
