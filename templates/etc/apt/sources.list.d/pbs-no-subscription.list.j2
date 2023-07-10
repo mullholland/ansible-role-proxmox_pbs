@@ -4,5 +4,5 @@
 {% if proxmox_pbs_enable_no_subscription_repository %}
 deb http://download.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-no-subscription
 {% else %}
-#deb http://download.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-no-subscription
+# deb http://download.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-no-subscription
 {% endif %}

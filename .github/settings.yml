@@ -1,0 +1,8 @@
+---
+#
+# Ansible managed
+#
+repository:
+  description: configure proxmox backup server
+  homepage: https://mullholland.net
+  topics: cloud, packaging, system, ansible, molecule, tox, playbook
