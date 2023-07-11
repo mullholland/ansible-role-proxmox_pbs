@@ -48,7 +48,7 @@ The default values for the variables are set in [`defaults/main.yml`](https://gi
 # Older versions may work
 
 # https://pbs.proxmox.com/docs/installation.html#secureapt
-proxmox_pve_repository_key: "https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg"
+proxmox_pve_repository_key: "https://enterprise.proxmox.com/debian/proxmox-release-{{ ansible_distribution_release }}.gpg"
 
 # manages the Proxmox /etc/apt/sources.list
 proxmox_pbs_enable_default_repository: true
