@@ -16,8 +16,6 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
   hosts: all
   become: true
   gather_facts: true
-  # vars:
-  #   example_var: "value"
   roles:
     - role: "mullholland.proxmox_pbs"
 ```

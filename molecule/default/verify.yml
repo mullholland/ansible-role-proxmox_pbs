@@ -34,7 +34,7 @@
     - name: verify if pbs-enterprise.list exists
       ansible.builtin.lineinfile:
         name: '/etc/apt/sources.list.d/pbs-enterprise.list'
-        line: '#deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise'
+        line: '# deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise'
         state: present
       check_mode: true
       register: verify_enterprise_repository_status
