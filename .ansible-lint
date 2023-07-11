@@ -8,18 +8,21 @@
 profile: production
 
 exclude_paths:
-  - ./molecule/**/prepare.yml
-  - ./molecule/**/converge.yml
-  - ./molecule/**/verify.yml
-  - ./molecule/**/collections.yml
-  - ./.tox
-  - ./.cache
-  - ./.github
-  - ./requirements.yml
+  - molecule/**/prepare.yml
+  - molecule/**/converge.yml
+  - molecule/**/verify.yml
+  - molecule/**/collections.yml
+  - .tox
+  - .cache
+  - .github
+  - requirements.yml
 
 skip_list:
-  - yaml[truthy]
-  - name[casing]
+  - name[casing]  # not important for me
+  - schema[galaxy]  # testing roles not collections
+  - galaxy[no-changelog]
+  - galaxy[tags]
+  - galaxy[version-missing]
 
 enable_list:
   - name[prefix]
