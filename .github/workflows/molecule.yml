@@ -24,8 +24,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint@v6
+      - name: run-ansible-lint
+        uses: ansible/ansible-lint@v6.17.2
   test:
     needs:
       - lint
