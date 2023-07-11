@@ -20,16 +20,16 @@ permissions:
 
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: ansible-lint
-        uses: ansible-community/ansible-lint-action@main
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@v6
   test:
     needs:
       - lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -68,7 +68,7 @@ jobs:
           changelog-generator-opt: "emojis=true"
 
   publish:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs:
       - release
     steps:
