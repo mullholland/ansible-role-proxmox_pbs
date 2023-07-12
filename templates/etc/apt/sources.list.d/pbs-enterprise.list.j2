@@ -3,5 +3,5 @@
 {% if proxmox_pbs_enable_enterprise_repository %}
 deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise
 {% else %}
-#deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise
+# deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise
 {% endif %}
