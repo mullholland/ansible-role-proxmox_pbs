@@ -1,11 +1,10 @@
-# [proxmox_pbs](#proxmox_pbs)
+# [Ansible role proxmox_pbs](#proxmox_pbs)
 
 configure proxmox backup server
 
-|GitHub|GitLab|Quality|Downloads|Version|
-|------|------|-------|---------|-------|
-|[![github](https://github.com/mullholland/ansible-role-proxmox_pbs/workflows/Ansible%20Molecule/badge.svg)](https://github.com/mullholland/ansible-role-proxmox_pbs/actions)|[![gitlab](https://gitlab.com/opensourceunicorn/ansible-role-proxmox_pbs/badges/master/pipeline.svg)](https://gitlab.com/opensourceunicorn/ansible-role-proxmox_pbs)|[![quality](https://img.shields.io/ansible/quality/60151)](https://galaxy.ansible.com/mullholland/proxmox_pbs)|[![downloads](https://img.shields.io/ansible/role/d/60151)](https://galaxy.ansible.com/mullholland/proxmox_pbs)|[![Version](https://img.shields.io/github/release/mullholland/ansible-role-proxmox_pbs.svg)](https://github.com/mullholland/ansible-role-proxmox_pbs/releases/)|
-
+|GitHub|Downloads|Version|
+|------|---------|-------|
+|[![github](https://github.com/mullholland/ansible-role-proxmox_pbs/actions/workflows/molecule.yml/badge.svg)](https://github.com/mullholland/ansible-role-proxmox_pbs/actions/workflows/molecule.yml)|[![downloads](https://img.shields.io/ansible/role/d/mullholland/proxmox_pbs)](https://galaxy.ansible.com/mullholland/proxmox_pbs)|[![Version](https://img.shields.io/github/release/mullholland/ansible-role-proxmox_pbs.svg)](https://github.com/mullholland/ansible-role-proxmox_pbs/releases/)|
 ## [Example Playbook](#example-playbook)
 
 This example is taken from [`molecule/default/converge.yml`](https://github.com/mullholland/ansible-role-proxmox_pbs/blob/master/molecule/default/converge.yml) and is tested on each push, pull request and release.
@@ -36,6 +35,7 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
             deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise
         dest: /etc/apt/sources.list.d/pbs-enterprise.list
 ```
+
 
 
 ## [Role Variables](#role-variables)
@@ -81,7 +81,7 @@ This role has been tested on these [container images](https://hub.docker.com/u/m
 
 |container|tags|
 |---------|----|
-|[Debian](https://hub.docker.com/repository/docker/mullholland/docker-debian-systemd/general)|all|
+|[Debian](https://hub.docker.com/r/mullholland/debian)|all|
 
 The minimum version of Ansible required is 2.10, tests have been done to:
 
@@ -89,7 +89,7 @@ The minimum version of Ansible required is 2.10, tests have been done to:
 - The current version.
 - The development version.
 
-If you find issues, please register them in [GitHub](https://github.com/mullholland/ansible-role-proxmox_pbs/issues)
+If you find issues, please register them in [GitHub](https://github.com/mullholland/ansible-role-proxmox_pbs/issues).
 
 ## [License](#license)
 
@@ -98,5 +98,3 @@ If you find issues, please register them in [GitHub](https://github.com/mullholl
 ## [Author Information](#author-information)
 
 [Mullholland](https://mullholland.net)
-
-Please consider [sponsoring me](https://github.com/sponsors/mullholland).
