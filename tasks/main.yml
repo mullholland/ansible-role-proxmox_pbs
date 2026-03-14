@@ -1,8 +1,15 @@
 ---
-- name: Add PVE Apt signing key
-  ansible.builtin.apt_key:
+- name: Ensure /etc/apt/keyrings exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: Download Proxmox PBS apt signing key
+  ansible.builtin.get_url:
     url: "{{ proxmox_pve_repository_key }}"
-    state: present
+    dest: "{{ proxmox_pve_repository_keyring }}"
+    mode: "0644"
 
 - name: Update sources.list
   ansible.builtin.template:
@@ -14,22 +21,18 @@
   when: proxmox_pbs_enable_default_repository
   register: proxmox_pbs_repository_sources_list
 
-- name: Update pbs-enterprise.list
-  ansible.builtin.template:
-    src: "etc/apt/sources.list.d/pbs-enterprise.list.j2"
-    dest: "/etc/apt/sources.list.d/pbs-enterprise.list"
-    owner: "root"
-    group: "root"
-    mode: '0644'
+- name: Configure pbs-enterprise repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by={{ proxmox_pve_repository_keyring }}] https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise"
+    state: "{{ proxmox_pbs_enable_enterprise_repository | bool | ternary('present', 'absent') }}"
+    filename: pbs-enterprise
   register: proxmox_pbs_repository_enterprise_list
 
-- name: Update pbs-no-subscription.list
-  ansible.builtin.template:
-    src: "etc/apt/sources.list.d/pbs-no-subscription.list.j2"
-    dest: "/etc/apt/sources.list.d/pbs-no-subscription.list"
-    owner: "root"
-    group: "root"
-    mode: '0644'
+- name: Configure pbs-no-subscription repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by={{ proxmox_pve_repository_keyring }}] http://download.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-no-subscription"
+    state: "{{ proxmox_pbs_enable_no_subscription_repository | bool | ternary('present', 'absent') }}"
+    filename: pbs-no-subscription
   register: proxmox_pbs_repository_no_subscription_list
 
 - name: Update repository cache
