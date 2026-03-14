@@ -11,15 +11,15 @@
     dest: "{{ proxmox_pve_repository_keyring }}"
     mode: "0644"
 
-- name: Update sources.list
-  ansible.builtin.template:
-    src: "etc/apt/sources.list.j2"
-    dest: "/etc/apt/sources.list"
-    owner: "root"
-    group: "root"
-    mode: '0644'
-  when: proxmox_pbs_enable_default_repository
-  register: proxmox_pbs_repository_sources_list
+# - name: Update sources.list
+#   ansible.builtin.template:
+#     src: "etc/apt/sources.list.j2"
+#     dest: "/etc/apt/sources.list"
+#     owner: "root"
+#     group: "root"
+#     mode: '0644'
+#   when: proxmox_pbs_enable_default_repository
+#   register: proxmox_pbs_repository_sources_list
 
 - name: Configure pbs-enterprise repository
   ansible.builtin.apt_repository:
@@ -32,13 +32,13 @@
   ansible.builtin.apt_repository:
     repo: "deb [signed-by={{ proxmox_pve_repository_keyring }}] http://download.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-no-subscription"
     state: "{{ proxmox_pbs_enable_no_subscription_repository | bool | ternary('present', 'absent') }}"
-    filename: pbs-no-subscription
+    filename: proxmox.sources
   register: proxmox_pbs_repository_no_subscription_list
 
 - name: Update repository cache
   ansible.builtin.apt:
     update_cache: true
-  when: proxmox_pbs_repository_sources_list.changed or
+  when: 
     proxmox_pbs_repository_enterprise_list.changed or
     proxmox_pbs_repository_no_subscription_list.changed
   # Data should be refreshed immediatly for other roles which depend on them
