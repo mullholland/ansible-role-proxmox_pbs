@@ -29,7 +29,7 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
   gather_facts: true
 
   roles:
-    - role: "mullholland.ansible_role_proxmox_pve"
+    - role: mullholland.proxmox_pve
 ```
 
 
