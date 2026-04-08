@@ -38,7 +38,7 @@
 - name: Update repository cache
   ansible.builtin.apt:
     update_cache: true
-  when: 
+  when:
     proxmox_pbs_repository_enterprise_list.changed or
     proxmox_pbs_repository_no_subscription_list.changed
   # Data should be refreshed immediatly for other roles which depend on them
