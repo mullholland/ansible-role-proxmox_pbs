@@ -4,9 +4,5 @@
   become: true
   gather_facts: true
 
-  tasks:
-    - name: Copy PVE Repository Template
-      ansible.builtin.copy:
-        content: |
-            deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise
-        dest: /etc/apt/sources.list.d/pbs-enterprise.list
+  roles:
+    - role: "mullholland.ansible_role_proxmox_pve"

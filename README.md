@@ -16,7 +16,7 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
   become: true
   gather_facts: true
   roles:
-    - role: "mullholland.proxmox_pbs"
+    - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"
 ```
 
 The machine needs to be prepared. In CI this is done using [`molecule/default/prepare.yml`](https://github.com/mullholland/ansible-role-proxmox_pbs/blob/master/molecule/default/prepare.yml):
@@ -28,12 +28,8 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
   become: true
   gather_facts: true
 
-  tasks:
-    - name: Copy PVE Repository Template
-      ansible.builtin.copy:
-        content: |
-            deb https://enterprise.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-enterprise
-        dest: /etc/apt/sources.list.d/pbs-enterprise.list
+  roles:
+    - role: "mullholland.ansible_role_proxmox_pve"
 ```
 
 
@@ -67,6 +63,13 @@ proxmox_pbs_enable_no_subscription_repository: true
 
 - pip packages listed in [requirements.txt](https://github.com/mullholland/ansible-role-proxmox_pbs/blob/master/requirements.txt).
 
+## [State of used roles](#state-of-used-roles)
+
+The following roles are used to prepare a system. You can prepare your system in another way.
+
+| Requirement | GitHub | GitLab |
+|-------------|--------|--------|
+|[mullholland.proxmox_pve](https://galaxy.ansible.com/mullholland/proxmox_pve)|[![Build Status GitHub](https://github.com/mullholland/ansible-role-proxmox_pve/workflows/Ansible%20Molecule/badge.svg)](https://github.com/mullholland/ansible-role-proxmox_pve/actions)|[![Build Status GitLab](https://gitlab.com/mullholland-github-mirror/ansible-role-proxmox_pve/badges/master/pipeline.svg)](https://gitlab.com/mullholland-github-mirror/ansible-role-proxmox_pve)|
 
 ## [Context](#context)
 
