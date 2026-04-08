@@ -29,16 +29,13 @@
       register: verify_repository_status
       failed_when: (verify_repository_status is changed) or (verify_repository_status is failed)
 
-    - name: verify if pbs-enterprise.list exists
-      ansible.builtin.lineinfile:
-        name: '/etc/apt/sources.list.d/pbs-enterprise.list'
-        line: '# deb [signed-by=/etc/apt/keyrings/proxmox-release-{{ ansible_facts["distribution_release"] }}.gpg] https://enterprise.proxmox.com/debian/pbs {{ ansible_facts["distribution_release"] }} pbs-enterprise'
-        state: present
-      check_mode: true
+    - name: Verify pbs-enterprise.list is absent (enterprise disabled by default)
+      ansible.builtin.stat:
+        path: '/etc/apt/sources.list.d/pbs-enterprise.list'
       register: verify_enterprise_repository_status
-      failed_when: (verify_enterprise_repository_status is changed) or (verify_enterprise_repository_status is failed)
+      failed_when: verify_enterprise_repository_status.stat.exists
 
-    - name: verify if pbs-no-subscription.list exists
+    - name: Verify if pbs-no-subscription.list exists
       ansible.builtin.lineinfile:
         name: '/etc/apt/sources.list.d/pbs-no-subscription.list'
         line: 'deb [signed-by=/etc/apt/keyrings/proxmox-release-{{ ansible_facts["distribution_release"] }}.gpg] http://download.proxmox.com/debian/pbs {{ ansible_facts["distribution_release"] }} pbs-no-subscription'

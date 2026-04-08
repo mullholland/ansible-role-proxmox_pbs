@@ -22,7 +22,7 @@
   ansible.builtin.apt_repository:
     repo: "deb [signed-by={{ proxmox_pve_repository_keyring }}] http://download.proxmox.com/debian/pbs {{ ansible_facts['distribution_release'] }} pbs-no-subscription"
     state: "{{ proxmox_pbs_enable_no_subscription_repository | bool | ternary('present', 'absent') }}"
-    filename: proxmox.sources
+    filename: pbs-no-subscription
   register: proxmox_pbs_repository_no_subscription_list
 
 - name: Update repository cache
