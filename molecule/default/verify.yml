@@ -20,15 +20,6 @@
       register: verify_apt_signing_key_status
       failed_when: not verify_apt_signing_key_status.stat.exists
 
-    - name: verify if sources.list
-      ansible.builtin.lineinfile:
-        name: '/etc/apt/sources.list'
-        line: 'deb http://ftp.debian.org/debian {{ ansible_facts["distribution_release"] }} main contrib'
-        state: present
-      check_mode: true
-      register: verify_repository_status
-      failed_when: (verify_repository_status is changed) or (verify_repository_status is failed)
-
     - name: Verify pbs-enterprise.list is absent (enterprise disabled by default)
       ansible.builtin.stat:
         path: '/etc/apt/sources.list.d/pbs-enterprise.list'
